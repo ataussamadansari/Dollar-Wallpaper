@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    android:orientation="vertical"
+    tools:context=".Login_SignUp.SignUpActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_30sdp"
+        android:layout_weight="0.2"
+        android:gravity="center"
+        android:text="@string/sign_up"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_25sdp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:background="@drawable/edit_text_box"
+        android:hint="@string/name"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:padding="@dimen/_8sdp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/loginTextColor" />
+
+    <EditText
+        android:id="@+id/phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:background="@drawable/edit_text_box"
+        android:hint="@string/phone"
+        android:importantForAutofill="no"
+        android:inputType="phone"
+        android:padding="@dimen/_8sdp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/loginTextColor" />
+
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:autofillHints="emailAddress"
+        android:background="@drawable/edit_text_box"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
+        android:padding="@dimen/_8sdp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/loginTextColor" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:importantForAutofill="no"
+        android:background="@drawable/edit_text_box"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:padding="@dimen/_8sdp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/loginTextColor" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <CheckBox
+            android:id="@+id/checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_2sdp"
+            android:text="I Agree with"
+            android:textColor="@color/loginTextColor" />
+
+        <TextView
+            android:id="@+id/privacy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_2sdp"
+            android:text="privacy"
+            android:textColor="@color/loginLinkTextColor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_2sdp"
+            android:text="and"
+            android:textColor="@color/loginTextColor" />
+
+        <TextView
+            android:id="@+id/policy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="policy"
+            android:textColor="@color/loginLinkTextColor" />
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/signUpBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:background="@drawable/button_bg"
+        android:text="@string/sign_up"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_15sdp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.2" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/already_have_an_account"
+            android:textColor="@color/loginTextColor"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/logBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:text="@string/login"
+            android:textColor="@color/loginLinkTextColor"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</LinearLayout>

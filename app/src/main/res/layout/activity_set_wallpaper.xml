@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    tools:context=".SetWallpaper.SetWallpaperActivity">
+
+
+    <ImageView
+        android:id="@+id/setImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/app_name"
+        android:scaleType="fitXY" />
+
+
+    <ImageView
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/back"
+        app:layout_constraintStart_toStartOf="@+id/setImage"
+        app:layout_constraintTop_toTopOf="@+id/setImage" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        app:layout_constraintBottom_toBottomOf="@id/setImage"
+        app:layout_constraintEnd_toEndOf="@id/setImage"
+        app:layout_constraintStart_toStartOf="@id/setImage">
+
+        <ImageView
+            android:id="@+id/shareBtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="8dp"
+            android:alpha="0.5"
+            android:background="@drawable/nav_box"
+            android:contentDescription="@string/app_name"
+            android:padding="8dp"
+            android:src="@drawable/share" />
+
+        <Button
+            android:id="@+id/ApplyBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/white"
+            android:text="@string/apply"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/likeBtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:alpha="0.5"
+            android:background="@drawable/nav_box"
+            android:contentDescription="@string/app_name"
+            android:padding="8dp"
+            android:src="@drawable/heart"
+            app:tint="@color/black" />
+    </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/setWallCat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/_10sdp"
+        app:cardElevation="@dimen/_5sdp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/_8sdp">
+
+            <TextView
+                android:id="@+id/setDesktop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:background="@drawable/text_box"
+                android:padding="@dimen/_5sdp"
+                android:text="@string/desktop_wallpaper"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_15sdp"
+                android:textStyle="bold"
+                app:drawableStartCompat="@drawable/smart_phone" />
+
+            <TextView
+                android:id="@+id/setLock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:background="@drawable/text_box"
+                android:padding="@dimen/_5sdp"
+                android:text="@string/lock_screen_wallpaper"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_15sdp"
+                android:textStyle="bold"
+                app:drawableStartCompat="@drawable/lock" />
+
+            <TextView
+                android:id="@+id/setBoth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:background="@drawable/text_box"
+                android:padding="@dimen/_5sdp"
+                android:text="@string/set_as_both"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_15sdp"
+                android:textStyle="bold"
+                app:drawableStartCompat="@drawable/both" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/cancel_button"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:background="@drawable/nav_box"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/cancel"
+        app:layout_constraintBottom_toTopOf="@+id/setWallCat"
+        app:layout_constraintEnd_toEndOf="@+id/setWallCat"
+        app:layout_constraintStart_toStartOf="@+id/setWallCat" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

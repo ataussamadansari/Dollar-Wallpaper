@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "843970746569",
+    "project_id": "dollar-wallpaper",
+    "storage_bucket": "dollar-wallpaper.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:843970746569:android:78e4f0c66b9e88299b9518",
+        "android_client_info": {
+          "package_name": "com.example.dollarwallpaper"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChIjkDrvITCA7dshPa7bxfqSkLNnlX7xI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:background="@color/colorPrimaryDark"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:padding="@dimen/_5sdp"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/forget_password"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/loginLinkTextColor"
+            android:textSize="@dimen/_20sdp"
+            android:textStyle="bold"/>
+        <ImageView
+            android:id="@+id/cBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/category"
+            android:src="@drawable/cancel"
+            app:tint="@color/white" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/userEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:autofillHints="username"
+        android:background="@drawable/edit_text_box"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
+        android:padding="@dimen/_8sdp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/loginTextColor" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/fBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:background="@drawable/button_bg"
+        android:ems="10"
+        android:text="@string/send"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_15sdp"
+        android:textStyle="bold" />
+
+</LinearLayout>
