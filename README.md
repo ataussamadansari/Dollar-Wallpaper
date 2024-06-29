@@ -32,17 +32,6 @@ You can download the application from the following link:
 3. Tap on a wallpaper to view it in full screen.
 4. Use the options to set the wallpaper as your home or lock screen, or add it to your favorites.
 
-## Contributing
-
-We welcome contributions to improve Dollar Wallpaper! Here’s how you can help:
-
-1. Fork the repository.
-2. Create a new branch for your feature or bugfix (`git checkout -b feature-name`).
-3. Make your changes.
-4. Commit your changes (`git commit -m 'Add some feature'`).
-5. Push to the branch (`git push origin feature-name`).
-6. Open a pull request.
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
