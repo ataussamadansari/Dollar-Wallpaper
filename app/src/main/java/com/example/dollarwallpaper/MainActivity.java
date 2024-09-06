@@ -1,6 +1,5 @@
 package com.example.dollarwallpaper;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -15,9 +14,9 @@ import androidx.core.content.ContextCompat;
 
 import com.example.dollarwallpaper.Login_SignUp.LoginActivity;
 import com.example.dollarwallpaper.MainPage.MainFragment;
+import com.example.dollarwallpaper.Premium.PremiumFragment;
 import com.example.dollarwallpaper.Profile.ProfileFragment;
 import com.example.dollarwallpaper.databinding.ActivityMainBinding;
-import com.google.api.Authentication;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
@@ -56,9 +55,9 @@ public class MainActivity extends AppCompatActivity {
             binding.homeBtn.setBackgroundResource(R.drawable.select_cir);
             binding.homeBtn.setImageResource(R.drawable.home_dark);
             binding.proBtn.setImageResource(R.drawable.profile);
-            //binding.saveBtn.setImageResource(R.drawable.heart);
+            binding.premiumBtn.setImageResource(R.drawable.ic_premium);
             binding.proBtn.setBackground(null);
-            //binding.saveBtn.setBackground(null);
+            binding.premiumBtn.setBackground(null);
         });
 
         binding.proBtn.setOnClickListener(v -> {
@@ -70,20 +69,26 @@ public class MainActivity extends AppCompatActivity {
             binding.proBtn.setBackgroundResource(R.drawable.select_cir);
             binding.proBtn.setImageResource(R.drawable.profile_dark);
             binding.homeBtn.setImageResource(R.drawable.home);
-            //binding.saveBtn.setImageResource(R.drawable.heart);
+            binding.premiumBtn.setImageResource(R.drawable.ic_premium);
             binding.homeBtn.setBackground(null);
-            //binding.saveBtn.setBackground(null);
+            binding.premiumBtn.setBackground(null);
         });
 
-        /*binding.saveBtn.setOnClickListener(v -> {
-            binding.toolbar.setTitle("Save");
-            binding.saveBtn.setBackgroundResource(R.drawable.select_cir);
-            binding.saveBtn.setImageResource(R.drawable.heart_dark);
+        binding.premiumBtn.setOnClickListener(v -> {
+            binding.toolbar.setTitle("Premium");
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment, new PremiumFragment()) // You might need to create this fragment
+                    .commit();
+
+            // Update button backgrounds
+            binding.premiumBtn.setBackgroundResource(R.drawable.select_cir);
+            binding.premiumBtn.setImageResource(R.drawable.ic_premium);
             binding.proBtn.setImageResource(R.drawable.profile);
             binding.homeBtn.setImageResource(R.drawable.home);
             binding.homeBtn.setBackground(null);
             binding.proBtn.setBackground(null);
-        });*/
+        });
 
 
         //permission
@@ -99,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
     MainFragment mainFragment = new MainFragment();
     ProfileFragment profileFragment = new ProfileFragment();
+    PremiumFragment premiumFragment = new PremiumFragment();
 
 
     //menu
@@ -113,10 +119,11 @@ public class MainActivity extends AppCompatActivity {
         // Handle item selection.
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
-        if (id == R.id.aiItem) {
-            Toast.makeText(this, "AiItem", Toast.LENGTH_SHORT).show();
+        /*if (id == R.id.aiItem) {
+            Toast.makeText(this, "Coming Soon...", Toast.LENGTH_SHORT).show();
             return true;
-        }    else if (id == R.id.privacy) {
+        }    else*/
+        if (id == R.id.privacy) {
             Toast.makeText(this, "Information", Toast.LENGTH_SHORT).show();
             return true;
         } else if (id == R.id.logOut) {
@@ -146,6 +153,19 @@ public class MainActivity extends AppCompatActivity {
             binding.proBtn.setImageResource(R.drawable.profile);
             binding.homeBtn.setImageResource(R.drawable.home_dark);
             binding.toolbar.setTitle(R.string.app_name);
+        } else if (premiumFragment.isVisible()) {
+            // Replace the profile fragment with the main fragment
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment, mainFragment)
+                    .commit();
+
+            // Update UI and toolbar title
+            binding.proBtn.setBackground(null);
+            binding.homeBtn.setBackgroundResource(R.drawable.select_cir);
+            binding.proBtn.setImageResource(R.drawable.profile);
+            binding.homeBtn.setImageResource(R.drawable.home_dark);
+            binding.toolbar.setTitle(R.string.app_name);
         } else {
             // If profile fragment is not displayed, proceed with default back press action
             super.onBackPressed();
@@ -154,19 +174,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     //permission
-    /*public void checkPermission() {
-        if (ContextCompat.checkSelfPermission(this,
-                android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-               != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    1);
-        }
-        else {
-            Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
-        }
-
-    }*/
     private static final int PERMISSION_REQUEST_CODE = 100;
 
     // Check if permission is granted
@@ -200,7 +207,4 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
-
-
-
 }

@@ -1,8 +1,7 @@
-package com.example.dollarwallpaper.MainPage;
+package com.example.dollarwallpaper.Premium;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,66 +10,49 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import com.example.dollarwallpaper.Category.CategoryAdapter;
-import com.example.dollarwallpaper.Category.CategoryClass;
+import com.example.dollarwallpaper.MainPage.MainViewModel;
 import com.example.dollarwallpaper.WallpaperPost.PostAdapter;
 import com.example.dollarwallpaper.WallpaperPost.UploadModelClass;
-import com.example.dollarwallpaper.databinding.FragmentMainBinding;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.example.dollarwallpaper.databinding.FragmentPremiumBinding;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
-import java.util.Random;
 
-public class MainFragment extends Fragment {
+public class PremiumFragment extends Fragment {
     // Declare ProgressDialog variable
     private ProgressDialog progressDialog;
     RecyclerView.LayoutManager RecyclerViewLayoutManager;
-    LinearLayoutManager HorizontalLayout;
-    ArrayList<CategoryClass> categoryClasses = new ArrayList<>();
     ArrayList<UploadModelClass> uploadModelClasses = new ArrayList<>();
-    CategoryAdapter adapter;
     PostAdapter adapter1;
     FirebaseFirestore database;
-    private MainViewModel viewModel;
-    FragmentMainBinding binding;
+    FragmentPremiumBinding binding;
+    private MainViewModel mainViewModel;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(this).get(MainViewModel.class);
+    public PremiumFragment() {
+        // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentMainBinding.inflate(inflater, container, false);
+        binding = FragmentPremiumBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
         database = FirebaseFirestore.getInstance();
 
-        binding.categoryRV.setLayoutManager(new LinearLayoutManager(getContext()));
         RecyclerViewLayoutManager = new LinearLayoutManager(getContext());
-        binding.categoryRV.setLayoutManager(RecyclerViewLayoutManager);
 
         // Initialize ProgressDialog
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
 
-        setupViewModelObservers();
 
         return view;
     }
@@ -92,58 +74,16 @@ public class MainFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        retrieveCategoryNames(); // Retrieve category names
         populatePostList(); // Populate post list
         setPostAdapter();
     }
 
 
-    private void setupViewModelObservers() {
-        viewModel.getCategories().observe(getViewLifecycleOwner(), new Observer<ArrayList<CategoryClass>>() {
-            @Override
-            public void onChanged(ArrayList<CategoryClass> categories) {
-                // Update category RecyclerView adapter when data changes
-                setCategoryAdapter();
-            }
-        });
-
-        viewModel.getUploadModelClasses().observe(getViewLifecycleOwner(), new Observer<ArrayList<UploadModelClass>>() {
-            @Override
-            public void onChanged(ArrayList<UploadModelClass> uploadModelClasses) {
-                // Update post RecyclerView adapter when data changes
-                setPostAdapter();
-                populatePostList();
-            }
-        });
-    }
-
-
-    // Retrieve category names from Firestore
-    private void retrieveCategoryNames() {
-        showProgressDialog();
-        database.collection("categories")
-                .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    dismissProgressDialog();
-                    categoryClasses.clear();
-                    for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                        String categoryName = documentSnapshot.getString("catName");
-                        if (categoryName != null) {
-                            categoryClasses.add(new CategoryClass(categoryName));
-                        }
-                    }
-                    setCategoryAdapter();
-                })
-                .addOnFailureListener(e -> {
-                    dismissProgressDialog();
-                    Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                });
-    }
 
     // Retrieve post data from Firestore
     private void populatePostList() {
         showProgressDialog();
-        database.collection("images")
+        database.collection("premium-Images")
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     dismissProgressDialog();
@@ -161,25 +101,11 @@ public class MainFragment extends Fragment {
     }
 
 
-    private void setCategoryAdapter() {
-        // Create adapter with retrieved category names and set it to the RecyclerView
-        adapter = new CategoryAdapter(getContext(), categoryClasses, categoryName -> {
-            // Handle category click event if needed
-            Log.d("Cat", categoryName);
-            updatePostRecyclerView(categoryName);
-        });
-        HorizontalLayout = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        binding.categoryRV.setLayoutManager(HorizontalLayout);
-        binding.categoryRV.setAdapter(adapter);
-    }
-
-
     private void setPostAdapter() {
-        binding.postRV.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        binding.premiumRV.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         adapter1 = new PostAdapter(getContext(), uploadModelClasses);
-        binding.postRV.setAdapter(adapter1);
+        binding.premiumRV.setAdapter(adapter1);
     }
-
 
 
     private void updatePostRecyclerView(String categoryName) {

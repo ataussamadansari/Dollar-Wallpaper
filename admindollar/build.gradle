@@ -47,7 +47,4 @@ dependencies {
 
     implementation libs.sdp.android
     implementation libs.glide
-    implementation libs.monitor
-    implementation libs.androidx.junit
-    annotationProcessor libs.compiler
 }

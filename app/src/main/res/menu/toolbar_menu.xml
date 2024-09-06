@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
+   <!-- <item
         android:id="@+id/aiItem"
         android:icon="@drawable/google_bard_logo"
         android:title="@string/ai_image_creator"
         app:showAsAction="always" />
-
+-->
 
     <item
         android:id="@+id/setting"

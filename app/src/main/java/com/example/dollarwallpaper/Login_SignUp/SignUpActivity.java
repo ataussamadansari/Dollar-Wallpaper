@@ -54,7 +54,7 @@ public class SignUpActivity extends AppCompatActivity {
                 Toast.makeText(SignUpActivity.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
             } else {
                 if (binding.checkbox.isChecked()) {
-                    UserModelClass user = new UserModelClass(name, email, phone, password);
+                    UserModelClass user = new UserModelClass(name, email, phone, password, false);
                     dialog.show();
 
                     auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {

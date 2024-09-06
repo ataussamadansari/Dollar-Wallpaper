@@ -2,12 +2,14 @@ package com.example.dollarwallpaper.Login_SignUp;
 
 public class UserModelClass {
     String name, email, phone, pass;
+    boolean isPremium = false;
 
-    public UserModelClass(String name, String email, String phone, String pass) {
+    public UserModelClass(String name, String email, String phone, String pass, boolean isPremium) {
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.pass = pass;
+        this.isPremium = isPremium;
     }
 
     public UserModelClass() {
@@ -43,5 +45,13 @@ public class UserModelClass {
 
     public void setPass(String pass) {
         this.pass = pass;
+    }
+
+    public boolean isPremium() {
+        return isPremium;
+    }
+
+    public void setPremium(boolean premium) {
+        isPremium = premium;
     }
 }
