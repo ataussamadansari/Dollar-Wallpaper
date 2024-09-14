@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "669175316651",
+    "project_id": "dollar-wallpaper-admin",
+    "storage_bucket": "dollar-wallpaper-admin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:669175316651:android:72208e8779de09b4ddf7ee",
+        "android_client_info": {
+          "package_name": "com.starsky.dollarwallpaper"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjTv0xkI1vYIUdN9q0rxchNgSRLBYbm_0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

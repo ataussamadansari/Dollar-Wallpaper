@@ -1,4 +1,4 @@
-package com.example.admindollar;
+package com.starsky.admindollar;
 
 import org.junit.Test;
 

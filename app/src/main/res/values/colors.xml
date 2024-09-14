@@ -11,4 +11,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="loginLinkTextColor">#A80039</color>
     <color name="loginTextColor">#747474</color>
+    <color name="light_gray">#686868</color>
+    <color name="highlight_text_color">#2196F3</color>
 </resources>

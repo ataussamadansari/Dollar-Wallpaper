@@ -1,11 +1,10 @@
-package com.example.admindollar;
+package com.starsky.admindollar;
 
 public class UploadModelClass {
-    String imageURL, desc;
+    String imageURL;
 
-    public UploadModelClass(String image, String desc) {
+    public UploadModelClass(String image) {
         this.imageURL = image;
-        this.desc = desc;
     }
 
     public UploadModelClass() {
@@ -19,11 +18,4 @@ public class UploadModelClass {
         this.imageURL = imageURL;
     }
 
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
 }

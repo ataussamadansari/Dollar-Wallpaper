@@ -1,26 +1,18 @@
-package com.example.admindollar.ShowUsers;
+package com.starsky.admindollar.ShowUsers;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import com.example.admindollar.Category.CategoryClass;
-import com.example.admindollar.R;
-import com.example.admindollar.databinding.ActivityShowUsersBinding;
+import com.starsky.admindollar.R;
+import com.starsky.admindollar.databinding.ActivityShowUsersBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.Source;
 
 import java.util.ArrayList;
 import java.util.Objects;

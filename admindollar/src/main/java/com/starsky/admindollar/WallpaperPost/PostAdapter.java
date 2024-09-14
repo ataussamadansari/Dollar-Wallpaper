@@ -1,4 +1,4 @@
-package com.example.admindollar.WallpaperPost;
+package com.starsky.admindollar.WallpaperPost;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.admindollar.R;
+import com.starsky.admindollar.R;
 
 import java.util.ArrayList;
 
@@ -39,7 +39,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder>{
                 .centerCrop()
                 .into(holder.image);
 
-        holder.desc.setText(modelClass.getDesc());
     }
 
     @Override
@@ -49,12 +48,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder>{
 
     public static class viewHolder extends RecyclerView.ViewHolder {
         ImageView image;
-        TextView desc;
         public viewHolder(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.post_img);
-            desc = itemView.findViewById(R.id.description);
-            desc.setVisibility(View.GONE);
         }
     }
 }

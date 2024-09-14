@@ -1,4 +1,4 @@
-package com.example.admindollar.ShowUsers;
+package com.starsky.admindollar.ShowUsers;
 
 public class ShowUserClass {
     String name, email, phone, pass;

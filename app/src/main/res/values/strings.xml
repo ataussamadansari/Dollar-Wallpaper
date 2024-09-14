@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Dollar Wallpaper</string>
+    <string name="app_id">ca-app-pub-8814618517281759~6758515541</string>
+    <string name="interstitial_ad_unit_id">ca-app-pub-3940256099942544/1033173712</string>
+
     <string name="apply">Apply</string>
     <string name="category">Category</string>
     <string name="ai_image_creator">AI Image Creator</string>
@@ -17,7 +20,7 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="about_this_app">About this app</string>
     <string name="login">Log In</string>
-    <string name="forget_password">Forget Password</string>
+    <string name="forget_password">Forget Password?</string>
     <string name="or_sign_in_with">Or Sign in with</string>
     <string name="don_t_have_an_account">Don\'t have an account?</string>
     <string name="sign_up">Sign Up</string>
@@ -32,10 +35,27 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="profile">Profile</string>
-    <string name="desktop_wallpaper">Desktop wallpaper</string>
+    <string name="home_wallpaper">Home wallpaper</string>
     <string name="lock_screen_wallpaper">Lock screen wallpaper</string>
     <string name="set_as_both">Set as both</string>
     <string name="phone">Phone No</string>
     <string name="log_out">Log Out</string>
     <string name="send">Send</string>
+    <string name="about">About</string>
+    <string name="txt_no_account_signup">Don\'t have an account? <font color="#2196F3">Register Now</font></string>
+    <string name="txt_register_header">Create New Account</string>
+    <string name="txt_register_subheader">Please provide all the required information</string>
+    <string name="txt_username">Username</string>
+    <string name="txt_username_hint">abcd</string>
+    <string name="txt_email">Email</string>
+    <string name="txt_email_hint">example@gmail.com</string>
+    <string name="txt_password">Password</string>
+    <string name="txt_password_hint">........</string>
+    <string name="txt_sign_up">Sign Up</string>
+    <string name="txt_already_have_account">Already have an account? <font color="#2196F3">Login</font></string>
+    <string name="txt_login_header">Welcome Back!</string>
+    <string name="txt_login_subheader">Login to access wallpaper</string>
+    <string name="txt_login">Login</string>
+    <string name="about_notes">Welcome to Dollar Wallpaper, your ultimate destination for high-quality wallpapers at affordable prices! At Dollar Wallpaper, we believe that everyone deserves to personalize their digital spaces with stunning visuals without breaking the bank.\n\n Our mission is to provide a vast collection of wallpapers that cater to every taste and style. Whether you\'re looking for minimalist designs, vibrant landscapes, captivating artwork, or trendy patterns, we have something for everyone. \n\n We understand the importance of quality, which is why each wallpaper in our collection is carefully curated to ensure crisp resolution and vibrant colors. Our team works tirelessly to update our library regularly, so you\'ll always find fresh and inspiring wallpapers to adorn your devices. \n\n In addition to offering an extensive selection of wallpapers, Dollar Wallpaper is committed to providing a seamless and user-friendly experience. Our intuitive interface makes it easy to browse, search, and download your favorite wallpapers with just a few clicks. \n\n Join the Dollar Wallpaper community today and elevate your digital experience with stunning wallpapers that won\'t break the bank. Whether you\'re decorating your smartphone, tablet, computer, or any other device, Dollar Wallpaper has you covered. \n\n Thank you for choosing Dollar Wallpaper to bring your screens to life!\n\n Feel free to customize and refine this draft according to the specific tone and branding of Dollar Wallpaper.</string>
+    <string name="home">Home</string>
 </resources>

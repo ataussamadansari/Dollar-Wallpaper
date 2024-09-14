@@ -1,7 +1,10 @@
 package com.starsky.dollarwallpaper.Premium;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +17,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import com.starsky.dollarwallpaper.MainPage.MainViewModel;
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
+import com.starsky.dollarwallpaper.R;
+import com.starsky.dollarwallpaper.SetWallpaper.SetWallpaperActivity;
 import com.starsky.dollarwallpaper.WallpaperPost.PostAdapter;
 import com.starsky.dollarwallpaper.WallpaperPost.UploadModelClass;
 import com.starsky.dollarwallpaper.databinding.FragmentPremiumBinding;
@@ -31,6 +42,8 @@ public class PremiumFragment extends Fragment {
     PostAdapter postAdapter;
     FirebaseFirestore database;
     FragmentPremiumBinding binding;
+    InterstitialAd mInterstitialAd;
+    Intent intent;
 
     private static final int UPI_PAYMENT_REQUEST_CODE = 123;
 
@@ -45,6 +58,12 @@ public class PremiumFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentPremiumBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+
+        // Initialize Mobile Ads SDK
+        MobileAds.initialize(getContext(), initializationStatus -> {});
+
+        // Load the interstitial ad
+        loadInterstitialAd();
 
         database = FirebaseFirestore.getInstance();
 
@@ -103,7 +122,64 @@ public class PremiumFragment extends Fragment {
 
     private void setPostAdapter() {
         binding.premiumRV.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-        postAdapter = new PostAdapter(getContext(), uploadModelClasses);
+        postAdapter = new PostAdapter(getContext(), uploadModelClasses, this::onItemClick);
         binding.premiumRV.setAdapter(postAdapter);
     }
+
+    // Handle item clicks from the adapter
+    public void onItemClick(UploadModelClass modelClass) {
+        // Handle click event here
+        intent = new Intent(getContext(), SetWallpaperActivity.class);
+        intent.putExtra("image", modelClass.getImageURL());
+        showInterstitialAd();
+    }
+
+    // Load Interstitial Ad
+    private void loadInterstitialAd() {
+        AdRequest adRequest = new AdRequest.Builder().build();
+        InterstitialAd.load(getContext(), getString(R.string.interstitial_ad_unit_id), adRequest,
+                new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                        mInterstitialAd = interstitialAd;
+                        Log.d("AdMob", "Interstitial ad loaded");
+                        mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                            @Override
+                            public void onAdDismissedFullScreenContent() {
+                                startActivity(intent);
+                                Log.d("AdMob", "Ad was dismissed.");
+                            }
+
+                            @Override
+                            public void onAdFailedToShowFullScreenContent(AdError adError) {
+                                startActivity(intent);
+                                Log.d("AdMob", "Ad failed to show.");
+                            }
+
+                            @Override
+                            public void onAdShowedFullScreenContent() {
+                                mInterstitialAd = null; // Ad is shown, set it to null to prevent multiple use
+                                Log.d("AdMob", "Ad showed fullscreen content.");
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        mInterstitialAd = null;
+                        Log.d("AdMob", "Failed to load interstitial ad: " + loadAdError.getMessage());
+                    }
+                });
+    }
+
+    // Show Interstitial Ad
+    private void showInterstitialAd() {
+        if (mInterstitialAd != null) {
+            mInterstitialAd.show((Activity) getContext());
+        } else {
+            Log.d("AdMob", "The interstitial ad wasn't ready yet.");
+            startActivity(intent);
+        }
+    }
+
 }

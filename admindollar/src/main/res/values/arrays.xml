@@ -1,3 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- other strings -->
+    <string-array name="image_types">
+        <item>Free Images</item>
+        <item>Premium Images</item>
+    </string-array>
 </resources>

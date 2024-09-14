@@ -1,7 +1,10 @@
 package com.starsky.dollarwallpaper.MainPage;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +19,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.starsky.dollarwallpaper.R;
+import com.starsky.dollarwallpaper.SetWallpaper.SetWallpaperActivity;
 import com.starsky.dollarwallpaper.WallpaperPost.PostAdapter;
 import com.starsky.dollarwallpaper.WallpaperPost.UploadModelClass;
 import com.starsky.dollarwallpaper.databinding.FragmentMainBinding;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 
@@ -31,13 +43,13 @@ public class MainFragment extends Fragment {
     ArrayList<UploadModelClass> uploadModelClasses = new ArrayList<>();
     PostAdapter postAdapter;
     FirebaseFirestore database;
-    private MainViewModel viewModel;
     FragmentMainBinding binding;
+    InterstitialAd mInterstitialAd;
+    Intent intent;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(this).get(MainViewModel.class);
     }
 
     @Override
@@ -49,16 +61,17 @@ public class MainFragment extends Fragment {
 
         database = FirebaseFirestore.getInstance();
 
-        binding.categoryRV.setLayoutManager(new LinearLayoutManager(getContext()));
-        RecyclerViewLayoutManager = new LinearLayoutManager(getContext());
-        binding.categoryRV.setLayoutManager(RecyclerViewLayoutManager);
 
         // Initialize ProgressDialog
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
 
-        setupViewModelObservers();
+        // Initialize Mobile Ads SDK
+        MobileAds.initialize(getContext(), initializationStatus -> {});
+
+        // Load the interstitial ad
+        loadInterstitialAd();
 
         return view;
     }
@@ -84,7 +97,7 @@ public class MainFragment extends Fragment {
         setPostAdapter();
     }
 
-    private void setupViewModelObservers() {
+    /*private void setupViewModelObservers() {
         viewModel.getUploadModelClasses().observe(getViewLifecycleOwner(), new Observer<ArrayList<UploadModelClass>>() {
             @Override
             public void onChanged(ArrayList<UploadModelClass> uploadModelClasses) {
@@ -93,7 +106,7 @@ public class MainFragment extends Fragment {
                 populatePostList();
             }
         });
-    }
+    }*/
 
 
     // Retrieve post data from Firestore
@@ -118,8 +131,64 @@ public class MainFragment extends Fragment {
 
     private void setPostAdapter() {
         binding.postRV.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-        postAdapter = new PostAdapter(getContext(), uploadModelClasses);
+        postAdapter = new PostAdapter(getContext(), uploadModelClasses, this::onItemClick);
         binding.postRV.setAdapter(postAdapter);
+    }
+
+    // Handle item clicks from the adapter
+    public void onItemClick(UploadModelClass modelClass) {
+        // Handle click event here
+        intent = new Intent(getContext(), SetWallpaperActivity.class);
+        intent.putExtra("image", modelClass.getImageURL());
+        showInterstitialAd();
+    }
+
+    // Load Interstitial Ad
+    private void loadInterstitialAd() {
+        AdRequest adRequest = new AdRequest.Builder().build();
+        InterstitialAd.load(getContext(), getString(R.string.interstitial_ad_unit_id), adRequest,
+                new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                        mInterstitialAd = interstitialAd;
+                        Log.d("AdMob", "Interstitial ad loaded");
+                        mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                            @Override
+                            public void onAdDismissedFullScreenContent() {
+                                startActivity(intent);
+                                Log.d("AdMob", "Ad was dismissed.");
+                            }
+
+                            @Override
+                            public void onAdFailedToShowFullScreenContent(AdError adError) {
+                                startActivity(intent);
+                                Log.d("AdMob", "Ad failed to show.");
+                            }
+
+                            @Override
+                            public void onAdShowedFullScreenContent() {
+                                mInterstitialAd = null; // Ad is shown, set it to null to prevent multiple use
+                                Log.d("AdMob", "Ad showed fullscreen content.");
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        mInterstitialAd = null;
+                        Log.d("AdMob", "Failed to load interstitial ad: " + loadAdError.getMessage());
+                    }
+                });
+    }
+
+    // Show Interstitial Ad
+    private void showInterstitialAd() {
+        if (mInterstitialAd != null) {
+            mInterstitialAd.show((Activity) getContext());
+        } else {
+            Log.d("AdMob", "The interstitial ad wasn't ready yet.");
+            startActivity(intent);
+        }
     }
 
 }

@@ -20,11 +20,15 @@
         android:theme="@style/Theme.DollarWallpaper"
         tools:targetApi="31">
         <activity
-            android:name=".Login_SignUp.GoogleLoginActivity"
+            android:name=".About.AboutActivity"
             android:exported="false" />
         <activity
-            android:name=".SpalshActivity"
-            android:exported="true">
+            android:name=".SplashActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Login_SignUp.SignUpActivity"
+            android:exported="true" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,17 +36,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Login_SignUp.SignUpActivity"
-            android:exported="false" />
-        <activity
             android:name=".Login_SignUp.LoginActivity"
-            android:exported="false" />
+            android:exported="true"/>
         <activity
             android:name=".SetWallpaper.SetWallpaperActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/app_id"/>
     </application>
 
 </manifest>

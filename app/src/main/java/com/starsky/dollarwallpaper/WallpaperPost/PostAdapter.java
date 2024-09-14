@@ -4,6 +4,7 @@ package com.starsky.dollarwallpaper.WallpaperPost;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.starsky.dollarwallpaper.R;
 import com.starsky.dollarwallpaper.SetWallpaper.SetWallpaperActivity;
 
@@ -22,11 +29,20 @@ import java.util.ArrayList;
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder> {
     Context context;
     ArrayList<UploadModelClass> uploadModelClasses;
+    OnItemClickListener onItemClickListener; // Interface for click listener
 
-    public PostAdapter(Context context, ArrayList<UploadModelClass> uploadModelClasses) {
+    // Define interface for item clicks
+    public interface OnItemClickListener {
+        void onItemClick(UploadModelClass modelClass);
+    }
+
+    // Constructor with listener
+    public PostAdapter(Context context, ArrayList<UploadModelClass> uploadModelClasses, OnItemClickListener listener) {
         this.context = context;
         this.uploadModelClasses = uploadModelClasses;
+        this.onItemClickListener = listener;
     }
+
 
     @NonNull
     @Override
@@ -54,10 +70,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder> {
         holder.desc.setText(modelClass.getDesc());
         //Glide.with(context).load(modelClass.getImage()).into(holder.image);
 
+        // Set item click listener
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, SetWallpaperActivity.class);
-            intent.putExtra("image", modelClass.getImageURL());
-            context.startActivity(intent);
+            if (onItemClickListener != null) {
+                onItemClickListener.onItemClick(modelClass); // Pass clicked item data
+            }
         });
     }
 
@@ -83,4 +100,5 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder> {
             desc.setVisibility(View.GONE);
         }
     }
+
 }

@@ -1,4 +1,4 @@
-package com.example.admindollar.Category;
+package com.starsky.admindollar.Category;
 
 public class CategoryClass {
     String catName;

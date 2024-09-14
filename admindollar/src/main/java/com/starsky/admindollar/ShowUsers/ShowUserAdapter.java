@@ -1,4 +1,4 @@
-package com.example.admindollar.ShowUsers;
+package com.starsky.admindollar.ShowUsers;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.admindollar.R;
+import com.starsky.admindollar.R;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.example.admindollar.WallpaperPost;
+package com.starsky.admindollar.WallpaperPost;
 
 public class UploadModelClass {
     String imageURL, desc;

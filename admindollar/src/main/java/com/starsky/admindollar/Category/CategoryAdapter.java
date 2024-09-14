@@ -1,4 +1,4 @@
-package com.example.admindollar.Category;
+package com.starsky.admindollar.Category;
 
 
 import android.content.Context;
@@ -6,13 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.example.admindollar.R;
+import com.starsky.admindollar.R;
 
 import java.util.ArrayList;
 

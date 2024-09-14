@@ -1,4 +1,4 @@
-package com.example.admindollar.WallpaperPost;
+package com.starsky.admindollar.WallpaperPost;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -9,8 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import com.example.admindollar.R;
-import com.example.admindollar.databinding.ActivityImageBinding;
+import com.starsky.admindollar.R;
+import com.starsky.admindollar.databinding.ActivityImageBinding;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 

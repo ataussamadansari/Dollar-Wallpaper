@@ -6,17 +6,30 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
+import com.starsky.dollarwallpaper.R;
 import com.starsky.dollarwallpaper.databinding.ActivitySetWallpaperBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -33,6 +46,7 @@ public class SetWallpaperActivity extends AppCompatActivity {
     String imageUrl;
     FirebaseFirestore database;
     FirebaseAuth auth;
+    InterstitialAd mInterstitialAd;
 
     @SuppressLint("NewApi")
     @Override
@@ -40,10 +54,24 @@ public class SetWallpaperActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivitySetWallpaperBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        EdgeToEdge.enable(this);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
 
         database = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
 
+
+        // Initialize Mobile Ads SDK
+        MobileAds.initialize(this, initializationStatus -> {});
+
+        // Load the interstitial ad
+//        loadInterstitialAd();
+
+//        new Handler().postDelayed(this::showInterstitialAd, 5000);
 
         binding.btnBack.setOnClickListener(view -> {
             onBackPressed();
@@ -107,6 +135,52 @@ public class SetWallpaperActivity extends AppCompatActivity {
         });
 
     }
+
+    // Load Interstitial Ad
+    private void loadInterstitialAd() {
+        AdRequest adRequest = new AdRequest.Builder().build();
+        InterstitialAd.load(this, getString(R.string.interstitial_ad_unit_id), adRequest,
+                new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                        mInterstitialAd = interstitialAd;
+                        Log.d("AdMob", "Interstitial ad loaded");
+                        mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                            @Override
+                            public void onAdDismissedFullScreenContent() {
+                                Log.d("AdMob", "Ad was dismissed.");
+                            }
+
+                            @Override
+                            public void onAdFailedToShowFullScreenContent(AdError adError) {
+                                Log.d("AdMob", "Ad failed to show.");
+                            }
+
+                            @Override
+                            public void onAdShowedFullScreenContent() {
+                                mInterstitialAd = null; // Ad is shown, set it to null to prevent multiple use
+                                Log.d("AdMob", "Ad showed fullscreen content.");
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        mInterstitialAd = null;
+                        Log.d("AdMob", "Failed to load interstitial ad: " + loadAdError.getMessage());
+                    }
+                });
+    }
+
+    // Show Interstitial Ad
+    private void showInterstitialAd() {
+        if (mInterstitialAd != null) {
+            mInterstitialAd.show(this);
+        } else {
+            Log.d("AdMob", "The interstitial ad wasn't ready yet.");
+        }
+    }
+
     //favorites
     private void saveImageToFavorites(String imageUrl) {
         FirebaseAuth auth = FirebaseAuth.getInstance();

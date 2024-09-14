@@ -6,7 +6,8 @@
     <string name="update">Update</string>
     <string name="write_image_tag_using">Write Image Tag (Using ,)</string>
     <string name="create_category">Create Category</string>
-    <string name="show_upload_images">Show Upload Images</string>
+    <string name="show_free_images">Show Free Images</string>
+    <string name="show_premium_images">Show Premium Images</string>
     <string name="show_users_profile">Show Users Profile</string>
     <string name="show_category">Show Category</string>
     <string name="enter_category_name">Enter Category Name</string>

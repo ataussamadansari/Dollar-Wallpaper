@@ -12,7 +12,7 @@
         android:right="2dp"
         android:top="2dp">
         <shape>
-            <solid android:color="@color/white" />
+            <solid android:color="@color/colorPrimary" />
             <corners android:radius="@dimen/_360sdp" />
         </shape>
     </item>

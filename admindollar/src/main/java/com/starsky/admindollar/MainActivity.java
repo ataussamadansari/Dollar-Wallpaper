@@ -1,4 +1,4 @@
-package com.example.admindollar;
+package com.starsky.admindollar;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -22,19 +21,18 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import com.example.admindollar.Category.CategoryAdapter;
-import com.example.admindollar.Category.CategoryClass;
-import com.example.admindollar.ShowUsers.ShowUsersActivity;
-import com.example.admindollar.WallpaperPost.ImageActivity;
-import com.example.admindollar.databinding.ActivityMainBinding;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.starsky.admindollar.Category.CategoryAdapter;
+import com.starsky.admindollar.Category.CategoryClass;
+import com.starsky.admindollar.ShowUsers.ShowUsersActivity;
+import com.starsky.admindollar.WallpaperPost.ImageActivity;
+import com.starsky.admindollar.databinding.ActivityMainBinding;
+import com.starsky.admindollar.premium.PremiumActivity;
 
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
@@ -66,47 +64,16 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(binding.toolbar);
         binding.toolbar.setOverflowIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.menu));
 
-        //create category
-        create_cat_dialog = new Dialog(this);
-        create_cat_dialog.setContentView(R.layout.create_cat_dialog);
-        Objects.requireNonNull(create_cat_dialog.getWindow()).setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//        create_cat_dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dia_bg));
-        create_cat_dialog.setCancelable(false);
-
-        cat_name = create_cat_dialog.findViewById(R.id.cat_name);
-        create_cat_btn = create_cat_dialog.findViewById(R.id.cat_btn);
-        close_btn = create_cat_dialog.findViewById(R.id.close_btn);
-        close_btn.setOnClickListener(v -> create_cat_dialog.dismiss());
-
-        create_cat_btn.setOnClickListener(v -> {
-            String categoryName = cat_name.getText().toString().trim();
-            if (categoryName.isEmpty()) {
-                Toast.makeText(MainActivity.this, "Please enter a category name", Toast.LENGTH_SHORT).show();
-            } else {
-                uploadCategory(categoryName);
-            }
-        });
-
-        //show category
-        show_cat_dialog = new Dialog(this);
-        show_cat_dialog.setContentView(R.layout.show_cat_dialog);
-        Objects.requireNonNull(show_cat_dialog.getWindow()).setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//        show_cat_dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dia_bg));
-        show_cat_dialog.setCancelable(false);
-
-        show_cat_name = show_cat_dialog.findViewById(R.id.show_cat_name);
-        create_cat_btn = show_cat_dialog.findViewById(R.id.cat_btn);
-        close_btn = show_cat_dialog.findViewById(R.id.close_btn);
-        catRV = show_cat_dialog.findViewById(R.id.categoryRV);
-        close_btn.setOnClickListener(v -> show_cat_dialog.dismiss());
-
-        retrieveCategoryNames();
 
         // Initialize click listeners
         binding.uploadIV.setOnClickListener(v -> openGallery());
         binding.uploadBtn.setOnClickListener(v -> {
             uploadData();
-            binding.decTV.setText(null);
+            binding.uploadIV.setImageResource(R.drawable.upload_img);
+        });
+
+        binding.premiumUploadBtn.setOnClickListener(v -> {
+            premiumUploadData();
             binding.uploadIV.setImageResource(R.drawable.upload_img);
         });
 
@@ -139,29 +106,35 @@ public class MainActivity extends AppCompatActivity {
 
     // Upload image and title to Firebase
     private void uploadData() {
-        if (selectedImageUri != null && binding.decTV.getText() != null) {
-            binding.decTV.append(", All");
-            String title = binding.decTV.getText().toString();
-            if (!title.isEmpty()) {
-                // Show ProgressDialog
-                progressDialog.show();
-                uploadImage(selectedImageUri, title);
-            } else {
-                Toast.makeText(this, "Please provide a title", Toast.LENGTH_SHORT).show();
-            }
+        if (selectedImageUri != null) {
+            // Show ProgressDialog
+            progressDialog.show();
+            uploadImage(selectedImageUri);
+
         } else {
             Toast.makeText(this, "Please select an image", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void uploadImage(Uri imageUri, final String title) {
+    private void premiumUploadData() {
+        if (selectedImageUri != null) {
+            // Show ProgressDialog
+            progressDialog.show();
+            premiumUploadImage(selectedImageUri);
+
+        } else {
+            Toast.makeText(this, "Please select an image", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void uploadImage(Uri imageUri) {
         StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("images/" + UUID.randomUUID().toString());
         storageRef.putFile(imageUri)
                 .addOnSuccessListener(taskSnapshot -> {
                     // Image uploaded successfully
                     storageRef.getDownloadUrl().addOnSuccessListener(uri -> {
                         String imageUrl = uri.toString();
-                        saveImageDataToFirestore(imageUrl, title); // After image upload, save data to Firestore
+                        saveImageDataToFirestore(imageUrl); // After image upload, save data to Firestore
                     });
                 })
                 .addOnFailureListener(e -> {
@@ -171,10 +144,40 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    private void saveImageDataToFirestore(String imageUrl, String title) {
+    private void premiumUploadImage(Uri imageUri) {
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("premium-images/" + UUID.randomUUID().toString());
+        storageRef.putFile(imageUri)
+                .addOnSuccessListener(taskSnapshot -> {
+                    // Image uploaded successfully
+                    storageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                        String imageUrl = uri.toString();
+                        saveImageDataToFirestorePremium(imageUrl); // After image upload, save data to Firestore
+                    });
+                })
+                .addOnFailureListener(e -> {
+                    // Handle errors
+                    progressDialog.dismiss(); // Dismiss ProgressDialog
+                    Toast.makeText(this, "Failed to upload image", Toast.LENGTH_SHORT).show();
+                });
+    }
+
+    private void saveImageDataToFirestore(String imageUrl) {
         // Create a new document in the "images" collection with a generated ID
         database.collection("images")
-                .add(new UploadModelClass(imageUrl, title))
+                .add(new UploadModelClass(imageUrl))
+                .addOnSuccessListener(documentReference -> {
+                    progressDialog.dismiss(); // Dismiss ProgressDialog
+                    Toast.makeText(this, "Data uploaded successfully", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e -> {
+                    progressDialog.dismiss(); // Dismiss ProgressDialog
+                    Toast.makeText(this, "Failed to upload data", Toast.LENGTH_SHORT).show();
+                });
+    }
+    private void saveImageDataToFirestorePremium(String imageUrl) {
+        // Create a new document in the "images" collection with a generated ID
+        database.collection("premiumImages")
+                .add(new UploadModelClass(imageUrl))
                 .addOnSuccessListener(documentReference -> {
                     progressDialog.dismiss(); // Dismiss ProgressDialog
                     Toast.makeText(this, "Data uploaded successfully", Toast.LENGTH_SHORT).show();
@@ -185,48 +188,6 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-
-    // Update uploadCategory method to use Firestore
-    private void uploadCategory(String categoryName) {
-        // Add a new document with a generated ID
-        database.collection("categories")
-                .add(new CategoryClass(categoryName))
-                .addOnSuccessListener(documentReference -> {
-                    // Category uploaded successfully
-                    Toast.makeText(MainActivity.this, "Category uploaded successfully", Toast.LENGTH_SHORT).show();
-                    cat_name.setText("");
-                    create_cat_dialog.dismiss(); // Dismiss the dialog after successful upload
-                })
-                .addOnFailureListener(e -> {
-                    // Handle failures
-                    Toast.makeText(MainActivity.this, "Failed to upload category", Toast.LENGTH_SHORT).show();
-                });
-    }
-
-    // Update retrieveCategoryNames method to use Firestore
-    private void retrieveCategoryNames() {
-        database.collection("categories")
-                .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    categoryClasses.clear();
-                    for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                        CategoryClass category = documentSnapshot.toObject(CategoryClass.class);
-                        categoryClasses.add(category);
-                    }
-                    setCategoryAdapter();
-                })
-                .addOnFailureListener(e -> {
-                    // Handle onCancelled event
-                    Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                });
-    }
-
-    private void setCategoryAdapter() {
-        // Create adapter with retrieved category names and set it to the RecyclerView
-        catRV.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-        adapter = new CategoryAdapter(getApplicationContext(), categoryClasses);
-        catRV.setAdapter(adapter);
-    }
 
     // Menu
     @Override
@@ -240,14 +201,11 @@ public class MainActivity extends AppCompatActivity {
         // Handle item selection.
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
-        if (id == R.id.cat_menu) {
-            create_cat_dialog.show();
-            return true;
-        } else if (id == R.id.show_cat_menu) {
-            show_cat_dialog.show();
-            return true;
-        } else if (id == R.id.show_image_menu) {
+        if (id == R.id.show_image_menu) {
             startActivity(new Intent(this, ImageActivity.class));
+            return true;
+        } else if (id == R.id.show_image_menu_pre) {
+            startActivity(new Intent(this, PremiumActivity.class));
             return true;
         } else if (id == R.id.profile_menu) {
             startActivity(new Intent(this, ShowUsersActivity.class));

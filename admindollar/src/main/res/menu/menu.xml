@@ -2,14 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/cat_menu"
-        android:title="@string/create_category" />
-    <item
-        android:id="@+id/show_cat_menu"
-        android:title="@string/show_category" />
-    <item
         android:id="@+id/show_image_menu"
-        android:title="@string/show_upload_images" />
+        android:title="@string/show_free_images" />
+    <item
+        android:id="@+id/show_image_menu_pre"
+        android:title="@string/show_premium_images" />
     <item
         android:id="@+id/profile_menu"
         android:title="@string/show_users_profile"/>

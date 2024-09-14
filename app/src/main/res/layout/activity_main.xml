@@ -5,7 +5,6 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
     tools:context=".MainActivity">
 
 
@@ -13,7 +12,6 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -24,62 +22,18 @@
         android:id="@+id/fragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/nav_view"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <include
+        android:id="@+id/nav_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
-
-    <View
-        android:id="@+id/view"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="20dp"
-        android:alpha="0.4"
-        android:background="@drawable/nav_box"
-        app:layout_constraintBottom_toBottomOf="@+id/fragment"
-        app:layout_constraintEnd_toEndOf="@id/fragment"
-        app:layout_constraintStart_toStartOf="@id/fragment" />
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:gravity="center"
-        android:padding="@dimen/_2sdp"
-        app:layout_constraintBottom_toBottomOf="@+id/view"
-        app:layout_constraintEnd_toEndOf="@+id/view"
-        app:layout_constraintStart_toStartOf="@+id/view"
-        app:layout_constraintTop_toTopOf="@+id/view">
-
-        <ImageView
-            android:id="@+id/homeBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/select_cir"
-            android:contentDescription="@string/app_name"
-            android:padding="@dimen/_9sdp"
-            android:src="@drawable/home_dark" />
-
-
-        <ImageView
-            android:id="@+id/premiumBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:contentDescription="@string/app_name"
-            android:padding="@dimen/_8sdp"
-            android:src="@drawable/ic_premium" />
-
-        <ImageView
-            android:id="@+id/proBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:contentDescription="@string/app_name"
-            android:padding="@dimen/_8sdp"
-            android:src="@drawable/profile" />
-    </LinearLayout>
+        layout="@layout/custom_nav_btn"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

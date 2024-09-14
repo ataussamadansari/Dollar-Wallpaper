@@ -1,17 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="AppInsightsSettings">
+    <option name="selectedTabId" value="Firebase Crashlytics" />
     <option name="tabSettings">
       <map>
+        <entry key="Android Vitals">
+          <value>
+            <InsightsFilterSettings>
+              <option name="connection">
+                <ConnectionSetting>
+                  <option name="appId" value="com.starsky.dollarwallpaper" />
+                </ConnectionSetting>
+              </option>
+              <option name="signal" value="SIGNAL_UNSPECIFIED" />
+              <option name="timeIntervalDays" value="SEVEN_DAYS" />
+              <option name="visibilityType" value="ALL" />
+            </InsightsFilterSettings>
+          </value>
+        </entry>
         <entry key="Firebase Crashlytics">
           <value>
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="com.example.dollarwallpaper" />
-                  <option name="mobileSdkAppId" value="1:843970746569:android:78e4f0c66b9e88299b9518" />
-                  <option name="projectId" value="dollar-wallpaper" />
-                  <option name="projectNumber" value="843970746569" />
+                  <option name="appId" value="com.starsky.dollarwallpaper" />
+                  <option name="mobileSdkAppId" value="1:669175316651:android:72208e8779de09b4ddf7ee" />
+                  <option name="projectId" value="dollar-wallpaper-admin" />
+                  <option name="projectNumber" value="669175316651" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
